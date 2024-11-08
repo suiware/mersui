@@ -9,9 +9,9 @@ import {
 export default function Home() {
   return (
     <div>
-      <main className="flex flex-col justify-center items-center h-screen">
+      <main className="flex flex-col justify-center items-center h-screen p-4">
         <h1 className="text-4xl font-bold">{APP_NAME}</h1>
-        <h2 className="text-xl mt-1">{APP_DESCRIPTION}</h2>
+        <h2 className="text-xl mt-1 text-center">{APP_DESCRIPTION}</h2>
 
         <div className="mt-5 text-center">
           by{" "}
