@@ -4,7 +4,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <h1>Mersui Widget</h1>
+      <h1 className="text-4xl">Mersui Widget</h1>
       <div className="card">
         <MersuiWidget />
       </div>

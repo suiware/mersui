@@ -1,8 +1,7 @@
 import {
-  ConnectModal,
+  ConnectButton,
   createNetworkConfig,
   SuiClientProvider,
-  useCurrentAccount,
   WalletProvider,
 } from "@mysten/dapp-kit";
 import "@mysten/dapp-kit/dist/index.css";
@@ -18,14 +17,14 @@ const { networkConfig } = createNetworkConfig({
 const queryClient = new QueryClient();
 
 export const MersuiWidget = () => {
-  const currentAccount = useCurrentAccount();
+  // const currentAccount = useCurrentAccount();
 
   return (
     <QueryClientProvider client={queryClient}>
       <SuiClientProvider networks={networkConfig} defaultNetwork="localnet">
         <WalletProvider>
-          {/* <ConnectButton /> */}
-          <ConnectModal
+          <ConnectButton connectText="Say Mersui" />{" "}
+          {/* <ConnectModal
             trigger={
               <button
                 disabled={!!currentAccount}
@@ -34,7 +33,7 @@ export const MersuiWidget = () => {
                 Say MerSui
               </button>
             }
-          />
+          /> */}
         </WalletProvider>
       </SuiClientProvider>
     </QueryClientProvider>
