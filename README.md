@@ -1,4 +1,4 @@
-# Mersui Widget (component library)
+# Mersui Widget (library)
 
 ## Local development
 
