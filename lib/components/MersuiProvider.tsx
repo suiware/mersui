@@ -10,8 +10,10 @@ import { FC, PropsWithChildren } from "react";
 import "./MersuiProvider.css";
 
 const { networkConfig } = createNetworkConfig({
-  localnet: { url: getFullnodeUrl("localnet") },
-  mainnet: { url: getFullnodeUrl("mainnet") },
+  localnet: { url: getFullnodeUrl('localnet') },
+	devnet: { url: getFullnodeUrl('devnet') },
+	testnet: { url: getFullnodeUrl('testnet') },
+	mainnet: { url: getFullnodeUrl('mainnet') },
 });
 const queryClient = new QueryClient();
 

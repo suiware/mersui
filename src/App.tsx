@@ -6,7 +6,7 @@ function App() {
     <>
       <h1 className="text-4xl">Mersui Widget</h1>
       <div className="card">
-        <MersuiWidget />
+        <MersuiWidget recipientAddress={import.meta.env.VITE_TARGET_ADDRESS} />
       </div>
     </>
   );
