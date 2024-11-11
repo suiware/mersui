@@ -18,11 +18,15 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
   function performTransaction() {
     const tx = new Transaction();
 
+    // @todo: get price feed data for SUI/USD from the sponsored feed
+    // https://hermes.pyth.network/v2/updates/price/latest?ids%5B%5D=23d7315113f5b1d3ba7a83604c44b94d79f4fd69af77f804fc7f920a6dc65744
+    // and use it to calculate the amount of SUI to send.
+
     const coin = tx.splitCoins(tx.gas, [
       // @todo: make the amount dynamic.
-      tx.pure.u64(BigInt(1 * 1_000_000_000)),
+      tx.pure.u64(BigInt(parseFloat("1.0") * 1_000_000_000)),
     ]);
-    tx.transferObjects([coin], recipientAddress);
+    tx.transferObjects([coin], tx.pure.address(recipientAddress));
 
     signAndExecuteTransaction(
       {
