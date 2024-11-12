@@ -11,6 +11,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { AMOUNT_USD, BUTTON_LABEL } from "../constants";
 
 interface IMersuiWidget {
   recipientAddress: string;
@@ -21,14 +22,14 @@ const fetchSuiPrice = async () => {
     "https://hermes.pyth.network/v2/updates/price/latest?ids%5B%5D=23d7315113f5b1d3ba7a83604c44b94d79f4fd69af77f804fc7f920a6dc65744"
   );
   const data = await response.json();
-  console.log(data);
+  // @todo Handle wrong response.
   return data.parsed[0].price;
 };
 
 export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
   const currentAccount = useCurrentAccount();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
-  const [digest, setDigest] = useState<string>("");
+  const [_, setDigest] = useState<string>("");
 
   function performTransaction() {
     const tx = new Transaction();
@@ -68,7 +69,7 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
     return (
       <div>
         <MersuiButton onClick={() => performTransaction()}>
-          Mersui $3
+          {BUTTON_LABEL} $${AMOUNT_USD}
         </MersuiButton>
       </div>
     );
@@ -77,7 +78,9 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
   return (
     <ConnectModal
       trigger={
-        <MersuiButton disabled={!!currentAccount}>Mersui $3</MersuiButton>
+        <MersuiButton disabled={!!currentAccount}>
+          {BUTTON_LABEL} $${AMOUNT_USD}
+        </MersuiButton>
       }
     />
   );
