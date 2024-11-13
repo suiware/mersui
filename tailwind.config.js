@@ -7,7 +7,16 @@ export default {
     "./src/**/*.{ts,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      keyframes: {
+        blink: {
+          "50%": { "border-color": "#0ea5e9" },
+        },
+      },
+      animation: {
+        border: "blink 1s ease-in-out infinite",
+      },
+    },
   },
   plugins: [],
 };
