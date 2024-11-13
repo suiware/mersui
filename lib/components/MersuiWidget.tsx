@@ -132,7 +132,7 @@ const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
   status,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center px-4 py-2 rounded-md border border-red-500">
+    <div className="flex flex-col items-center justify-center px-4 py-1 rounded-md">
       <button
         disabled={disabled}
         className={c(
@@ -146,7 +146,11 @@ const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
       >
         {children}
       </button>
-      <div className="text-sm visible h-3">
+      <div
+        className={c("text-sm h-3", {
+          invisible: status === "loading",
+        })}
+      >
         {status === "success" ? (
           <span className="text-green-600">success</span>
         ) : status === "error" ? (
