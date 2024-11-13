@@ -44,6 +44,9 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
   const [transactionAmount, setTransactionAmount] = useState<bigint>(
     TRANSACTION_AMOUNT_FALLBACK
   );
+  const [status, setStatus] = useState<"success" | "error" | "loading">(
+    "loading"
+  );
 
   function performTransaction() {
     const tx = new Transaction();
@@ -59,9 +62,14 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
         transaction: tx,
       },
       {
+        onError: (error) => {
+          console.log("error", error);
+          setStatus("error");
+        },
         onSuccess: (result) => {
           console.log("executed transaction", result);
           setDigest(result.digest);
+          setStatus("success");
         },
       }
     );
@@ -70,8 +78,6 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
   useEffect(() => {
     if (currentAccount) {
       fetchSuiPrice().then((priceObj: IPrice) => {
-        console.log("price", priceObj);
-
         setTransactionAmount(
           BigInt(
             Math.round(
@@ -89,7 +95,11 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
   if (currentAccount) {
     return (
       <div>
-        <MersuiButton onClick={() => performTransaction()} active={true}>
+        <MersuiButton
+          onClick={() => performTransaction()}
+          connected={true}
+          status={status}
+        >
           {BUTTON_LABEL} ${AMOUNT_USD}
         </MersuiButton>
       </div>
@@ -110,29 +120,41 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
 interface IMersuiButton {
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
-  active?: boolean;
+  connected?: boolean;
+  status?: "success" | "error" | "loading";
 }
 
 const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
   disabled,
   onClick,
   children,
-  active,
+  connected,
+  status,
 }) => {
   return (
-    <div className="flex flex-row items-center justify-center">
+    <div className="flex flex-col items-center justify-center px-4 py-2 rounded-md border border-red-500">
       <button
         disabled={disabled}
         className={c(
-          "px-6 py-2 text-gray-700 font-bold text-lg bg-yellow-400 rounded-full shadow-md hover:text-gray-700 hover:bg-yellow-300",
+          "px-6 py-2 text-gray-700 font-bold text-lg bg-yellow-400 rounded-full shadow-md hover:text-gray-700 hover:bg-yellow-300 mt-2",
           {
-            "border border-dashed border-yellow-400 animate-border": active,
+            "border border-transparent": !connected,
+            "border border-dashed border-yellow-400 animate-border": connected,
           }
         )}
         onClick={onClick}
       >
         {children}
       </button>
+      <div className="text-sm visible h-3">
+        {status === "success" ? (
+          <span className="text-green-600">success</span>
+        ) : status === "error" ? (
+          <span className="text-red-600">error</span>
+        ) : (
+          ""
+        )}
+      </div>
     </div>
   );
 };
