@@ -41,7 +41,7 @@ function App() {
 }
 ```
 
-That's it.
+Enjoy!
 
 ### Props
 
