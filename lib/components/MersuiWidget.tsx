@@ -14,30 +14,20 @@ import {
 } from "react";
 import {
   AMOUNT_USD,
-  BUTTON_LABEL,
+  DEFAULT_BUTTON_LABEL,
   PYTH_SPONSORED_FEED,
   TRANSACTION_AMOUNT_FALLBACK,
 } from "../constants";
 
 interface IMersuiWidget {
   recipientAddress: string;
+  buttonLabel?: string;
 }
 
-interface IPrice {
-  price: string;
-  expo: number;
-}
-
-const fetchSuiPrice = async () => {
-  const response = await fetch(
-    `https://hermes.pyth.network/v2/updates/price/latest?ids%5B%5D=${PYTH_SPONSORED_FEED}`
-  );
-  const data = await response.json();
-  // @todo Handle wrong response.
-  return data.parsed[0].price as IPrice;
-};
-
-export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
+export const MersuiWidget: FC<IMersuiWidget> = ({
+  recipientAddress,
+  buttonLabel,
+}) => {
   const currentAccount = useCurrentAccount();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
   const [_, setDigest] = useState<string>("");
@@ -63,11 +53,11 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
       },
       {
         onError: (error) => {
-          console.log("error", error);
+          console.error("trx error", error);
           setStatus("error");
         },
         onSuccess: (result) => {
-          console.log("executed transaction", result);
+          console.log("trx success", result.digest);
           setDigest(result.digest);
           setStatus("success");
         },
@@ -77,17 +67,8 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
 
   useEffect(() => {
     if (currentAccount) {
-      fetchSuiPrice().then((priceObj: IPrice) => {
-        setTransactionAmount(
-          BigInt(
-            Math.round(
-              (parseFloat(priceObj.price) /
-                10 ** Math.abs(priceObj.expo) /
-                AMOUNT_USD) *
-                1_000_000_000
-            )
-          )
-        );
+      fetchSuiPrice().then((priceObj: IPythPrice) => {
+        setTransactionAmount(calculateAmount(priceObj));
       });
     }
   }, [currentAccount]);
@@ -100,7 +81,7 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
           connected={true}
           status={status}
         >
-          {BUTTON_LABEL} ${AMOUNT_USD}
+          {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
         </MersuiButton>
       </div>
     );
@@ -110,7 +91,7 @@ export const MersuiWidget: FC<IMersuiWidget> = ({ recipientAddress }) => {
     <ConnectModal
       trigger={
         <MersuiButton disabled={!!currentAccount}>
-          {BUTTON_LABEL} ${AMOUNT_USD}
+          {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
         </MersuiButton>
       }
     />
@@ -160,5 +141,28 @@ const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
         )}
       </div>
     </div>
+  );
+};
+
+interface IPythPrice {
+  price: string;
+  expo: number;
+}
+
+const fetchSuiPrice = async () => {
+  const response = await fetch(
+    `https://hermes.pyth.network/v2/updates/price/latest?ids%5B%5D=${PYTH_SPONSORED_FEED}`
+  );
+  const data = await response.json();
+  // @todo Handle wrong response.
+  return data.parsed[0].price as IPythPrice;
+};
+
+const calculateAmount = (price: IPythPrice): bigint => {
+  return BigInt(
+    Math.round(
+      (parseFloat(price.price) / 10 ** Math.abs(price.expo) / AMOUNT_USD) *
+        1_000_000_000
+    )
   );
 };
