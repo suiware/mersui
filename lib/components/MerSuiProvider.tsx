@@ -21,7 +21,7 @@ export const MerSuiProvider: FC<PropsWithChildren> = ({ children }) => {
   return (
     <QueryClientProvider client={queryClient}>
       <SuiClientProvider networks={networkConfig} defaultNetwork="localnet">
-        <WalletProvider autoConnect={false}>{children}</WalletProvider>
+        <WalletProvider autoConnect={true}>{children}</WalletProvider>
       </SuiClientProvider>
     </QueryClientProvider>
   );
