@@ -1,5 +1,5 @@
 # MerSui
-Basically "Buy Me a Coffee" button with payments in SUI.
+Simple "Buy Me a Coffee" React button with payments in SUI.
 
 ## Demo
 
@@ -13,7 +13,7 @@ pnpm add mersui || yarn add mersui || npm install mersui
 
 ## Usage
 
-Wrap your main app component with the `MersuiProvider` component.
+First of all, wrap your main app component into the `MersuiProvider` component.
 
 ```tsx
 import { MersuiProvider } from "mersui";
@@ -35,11 +35,13 @@ import { MersuiWidget } from "mersui";
 function App() {
   return (
     <div>
-      <MersuiWidget recipientAddress="0x..." buttonLabel="Support" />
+      <MersuiWidget recipientAddress="0x..." />
     </div>
   );
 }
 ```
+
+That's it.
 
 ### Props
 
@@ -49,7 +51,7 @@ function App() {
 | recipientAddress    | string   | -       | Sui address of the recipient |
 | containerClassName  | string   | -       | Optional class name for the button container |
 | buttonClassName     | string   | -       | Optional class name for the button |
-| statusClassName     | string   | -       | Optional class name for the status message. The `status-success` and `status-error` classes are automatically added for your convinience. |
+| statusClassName     | string   | -       | Optional class name for the status message. The `status-success` and `status-error` classes are automatically added for your convenience. |
 
 ## Pyth Integration
 
@@ -64,4 +66,10 @@ The `src` folder contains a demo app that you can use to play with the library l
 pnpm dev
 ```
 
-The `lib` folder contains tsource code of the library.
+The `lib` folder contains source code of the library.
+
+## License & Copyright
+
+Copyright (c) 2024 Konstantin Komelin
+
+Licensed under the [MIT License](LICENSE).
