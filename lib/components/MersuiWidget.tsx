@@ -22,11 +22,17 @@ import {
 interface IMersuiWidget {
   recipientAddress: string;
   buttonLabel?: string;
+  containerClassName?: string;
+  buttonClassName?: string;
+  statusClassName?: string;
 }
 
 export const MersuiWidget: FC<IMersuiWidget> = ({
   recipientAddress,
   buttonLabel,
+  containerClassName,
+  buttonClassName,
+  statusClassName,
 }) => {
   const currentAccount = useCurrentAccount();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
@@ -75,22 +81,28 @@ export const MersuiWidget: FC<IMersuiWidget> = ({
 
   if (currentAccount) {
     return (
-      <div>
-        <MersuiButton
-          onClick={() => performTransaction()}
-          connected={true}
-          status={status}
-        >
-          {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
-        </MersuiButton>
-      </div>
+      <MersuiButton
+        onClick={() => performTransaction()}
+        connected={true}
+        status={status}
+        containerClassName={containerClassName}
+        buttonClassName={buttonClassName}
+        statusClassName={statusClassName}
+      >
+        {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
+      </MersuiButton>
     );
   }
 
   return (
     <ConnectModal
       trigger={
-        <MersuiButton disabled={!!currentAccount}>
+        <MersuiButton
+          disabled={!!currentAccount}
+          containerClassName={containerClassName}
+          buttonClassName={buttonClassName}
+          statusClassName={statusClassName}
+        >
           {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
         </MersuiButton>
       }
@@ -103,6 +115,9 @@ interface IMersuiButton {
   onClick?: MouseEventHandler<HTMLButtonElement>;
   connected?: boolean;
   status?: "success" | "error" | "loading";
+  containerClassName?: string;
+  buttonClassName?: string;
+  statusClassName?: string;
 }
 
 const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
@@ -111,9 +126,17 @@ const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
   children,
   connected,
   status,
+  containerClassName,
+  buttonClassName,
+  statusClassName,
 }) => {
   return (
-    <div className="flex flex-col items-center justify-center px-4 py-1 rounded-md">
+    <div
+      className={c(
+        "flex flex-col items-center justify-center px-4 py-1 rounded-md",
+        containerClassName
+      )}
+    >
       <button
         disabled={disabled}
         className={c(
@@ -121,7 +144,8 @@ const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
           {
             "border border-transparent": !connected,
             "border border-dashed border-yellow-400 animate-border": connected,
-          }
+          },
+          buttonClassName
         )}
         onClick={onClick}
       >
@@ -133,9 +157,17 @@ const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
         })}
       >
         {status === "success" ? (
-          <span className="text-green-600">success</span>
+          <span
+            className={c("text-green-600", `status-${status}`, statusClassName)}
+          >
+            success
+          </span>
         ) : status === "error" ? (
-          <span className="text-red-600">error</span>
+          <span
+            className={c("text-red-600", `status-${status}`, statusClassName)}
+          >
+            error
+          </span>
         ) : (
           ""
         )}
