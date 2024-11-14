@@ -46,5 +46,11 @@
     "vite": "^5.4.11",
     "vite-plugin-dts": "^4.3.0",
     "vite-plugin-lib-inject-css": "^2.1.1"
-  }
+  },
+  "keywords": [
+    "sui",
+    "buy-me-a-coffee",
+    "react",
+    "component-library"
+  ]
 }
