@@ -13,29 +13,29 @@ pnpm add mersui || yarn add mersui || npm install mersui
 
 ## Usage
 
-First of all, wrap your main app component into the `MersuiProvider` component.
+First of all, wrap your main app component into the `MerSuiProvider` component.
 
 ```tsx
-import { MersuiProvider } from "mersui";
+import { MerSuiProvider } from "mersui";
 
 function App() {
   return (
-    <MersuiProvider>
+    <MerSuiProvider>
       <YourApp />
-    </MersuiProvider>
+    </MerSuiProvider>
   );
 }
 ```
 
-Then, use the `MersuiWidget` component to render the button.
+Then, use the `MerSuiWidget` component to render the button.
 
 ```tsx
-import { MersuiWidget } from "mersui";
+import { MerSuiWidget } from "mersui";
 
 function App() {
   return (
     <div>
-      <MersuiWidget recipientAddress="0x..." />
+      <MerSuiWidget recipientAddress="0x..." />
     </div>
   );
 }
