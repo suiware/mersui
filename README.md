@@ -53,22 +53,37 @@ Enjoy!
 | buttonClassName     | string   | -       | Optional class name for the button |
 | statusClassName     | string   | -       | Optional class name for the status message. The `status-success` and `status-error` classes are automatically added for your convenience. |
 
-## Pyth Integration
+## Pyth integration
 
 MerSui uses Pyth's Sponsored Feed for SUI/USD to properly calculate the transaction amount in SUI. 
 See `lib/MerSuiWidget.tsx/fetchSuiPrice`.
 
 ## Development
 
+The `lib` folder contains the source code of the library.
+
 The `src` folder contains a demo app that you can use to play with the library locally.
+
+But before that, you need to set up the environment variables:
+
+```
+# .env.local
+VITE_RECIPIENT_ADDRESS=0x...
+```
+
+Then, run the development server:
 
 ```bash
 pnpm dev
 ```
 
-The `lib` folder contains source code of the library.
+## Build the library
 
-## License & Copyright
+```bash
+pnpm build
+```
+
+## License & copyright
 
 Copyright (c) 2024 Konstantin Komelin
 
