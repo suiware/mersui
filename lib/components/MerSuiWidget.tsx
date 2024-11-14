@@ -186,7 +186,7 @@ const fetchSuiPrice = async () => {
     `https://hermes.pyth.network/v2/updates/price/latest?ids%5B%5D=${PYTH_SPONSORED_FEED}`
   );
   const data = await response.json();
-  // @todo Handle wrong response.
+  // @todo Handle unexpected response.
   return data.parsed[0].price as IPythPrice;
 };
 

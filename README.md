@@ -49,7 +49,8 @@ function App() {
 
 ## Pyth Integration
 
-MerSui uses Pyth's Sponsored Feed for SUI/USD to properly calculate the transaction amount in SUI.
+MerSui uses Pyth's Sponsored Feed for SUI/USD to properly calculate the transaction amount in SUI. 
+See `lib/MerSuiWidget.tsx/fetchSuiPrice`.
 
 ## Development
 
