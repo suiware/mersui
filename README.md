@@ -1,6 +1,10 @@
 # MerSui
 Basically "Buy Me a Coffee" button with payments in SUI.
 
+## Demo
+
+[mersui.xyz](https://mersui.xyz)
+
 ## Installation
 
 ```bash
