@@ -1,12 +1,12 @@
-import { MersuiWidget } from "../lib/main";
+import { MerSuiWidget } from "../lib/main";
 import "./App.css";
 
 function App() {
   return (
     <>
-      <h1 className="text-4xl">Mersui Widget</h1>
+      <h1 className="text-4xl">MerSui Widget</h1>
       <div className="card">
-        <MersuiWidget
+        <MerSuiWidget
           recipientAddress={import.meta.env.VITE_TARGET_ADDRESS}
           buttonLabel="Support"
         />

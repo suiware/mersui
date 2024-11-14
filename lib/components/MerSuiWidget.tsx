@@ -19,7 +19,7 @@ import {
   TRANSACTION_AMOUNT_FALLBACK,
 } from "../constants";
 
-interface IMersuiWidget {
+interface IMerSuiWidget {
   recipientAddress: string;
   buttonLabel?: string;
   containerClassName?: string;
@@ -27,7 +27,7 @@ interface IMersuiWidget {
   statusClassName?: string;
 }
 
-export const MersuiWidget: FC<IMersuiWidget> = ({
+export const MerSuiWidget: FC<IMerSuiWidget> = ({
   recipientAddress,
   buttonLabel,
   containerClassName,
@@ -81,7 +81,7 @@ export const MersuiWidget: FC<IMersuiWidget> = ({
 
   if (currentAccount) {
     return (
-      <MersuiButton
+      <MerSuiButton
         onClick={() => performTransaction()}
         connected={true}
         status={status}
@@ -90,27 +90,27 @@ export const MersuiWidget: FC<IMersuiWidget> = ({
         statusClassName={statusClassName}
       >
         {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
-      </MersuiButton>
+      </MerSuiButton>
     );
   }
 
   return (
     <ConnectModal
       trigger={
-        <MersuiButton
+        <MerSuiButton
           disabled={!!currentAccount}
           containerClassName={containerClassName}
           buttonClassName={buttonClassName}
           statusClassName={statusClassName}
         >
           {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
-        </MersuiButton>
+        </MerSuiButton>
       }
     />
   );
 };
 
-interface IMersuiButton {
+interface IMerSuiButton {
   disabled?: boolean;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   connected?: boolean;
@@ -120,7 +120,7 @@ interface IMersuiButton {
   statusClassName?: string;
 }
 
-const MersuiButton: FC<PropsWithChildren<IMersuiButton>> = ({
+const MerSuiButton: FC<PropsWithChildren<IMerSuiButton>> = ({
   disabled,
   onClick,
   children,

@@ -1,2 +1,2 @@
-export { MersuiProvider } from "./components/MersuiProvider";
-export { MersuiWidget } from "./components/MersuiWidget";
+export { MerSuiProvider } from "./components/MerSuiProvider";
+export { MerSuiWidget } from "./components/MerSuiWidget";
