@@ -58,6 +58,10 @@ Enjoy!
 MerSui uses [Pyth's Sponsored Feed for SUI/USD](https://docs.pyth.network/price-feeds/sponsored-feeds/sui) to properly calculate the transaction amount in SUI. 
 See [lib/MerSuiWidget.tsx/fetchSuiPrice](/lib/components/MerSuiWidget.tsx#L184).
 
+## Known issues
+
+- Next.js: Global CSS cannot be imported from within node_modules https://github.com/vercel/next.js/issues/19936
+
 ## Development
 
 The `lib` folder contains the source code of the library.
