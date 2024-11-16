@@ -1,5 +1,6 @@
 # MerSui
-Simple "Buy Me a Coffee" React button with payments in SUI.
+Simple "Buy Me a Coffee" React button with payments in SUI.  
+No intermediaries, you receive donations directly to your Sui address.
 
 ## Demo
 
