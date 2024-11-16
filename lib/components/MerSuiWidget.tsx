@@ -21,20 +21,20 @@ import {
 
 interface IMerSuiWidget {
   recipientAddress: string;
+  amount?: number;
   buttonLabel?: string;
   containerClassName?: string;
   buttonClassName?: string;
   statusClassName?: string;
-  amount?: number;
 }
 
 export const MerSuiWidget: FC<IMerSuiWidget> = ({
   recipientAddress,
+  amount = DEFAULT_AMOUNT_USD,
   buttonLabel,
   containerClassName,
   buttonClassName,
   statusClassName,
-  amount = DEFAULT_AMOUNT_USD,
 }) => {
   const currentAccount = useCurrentAccount();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
@@ -49,10 +49,7 @@ export const MerSuiWidget: FC<IMerSuiWidget> = ({
   function performTransaction() {
     const tx = new Transaction();
 
-    const coin = tx.splitCoins(tx.gas, [
-      // @todo: make the amount dynamic.
-      tx.pure.u64(transactionAmount),
-    ]);
+    const coin = tx.splitCoins(tx.gas, [tx.pure.u64(transactionAmount)]);
     tx.transferObjects([coin], tx.pure.address(recipientAddress));
 
     signAndExecuteTransaction(
