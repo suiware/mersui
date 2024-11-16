@@ -13,7 +13,7 @@ import {
   useState,
 } from "react";
 import {
-  AMOUNT_USD,
+  DEFAULT_AMOUNT_USD,
   DEFAULT_BUTTON_LABEL,
   PYTH_SPONSORED_FEED,
   TRANSACTION_AMOUNT_FALLBACK,
@@ -25,6 +25,7 @@ interface IMerSuiWidget {
   containerClassName?: string;
   buttonClassName?: string;
   statusClassName?: string;
+  amount?: number;
 }
 
 export const MerSuiWidget: FC<IMerSuiWidget> = ({
@@ -33,10 +34,11 @@ export const MerSuiWidget: FC<IMerSuiWidget> = ({
   containerClassName,
   buttonClassName,
   statusClassName,
+  amount = DEFAULT_AMOUNT_USD,
 }) => {
   const currentAccount = useCurrentAccount();
   const { mutate: signAndExecuteTransaction } = useSignAndExecuteTransaction();
-  const [_, setDigest] = useState<string>("");
+  const [, setDigest] = useState<string>("");
   const [transactionAmount, setTransactionAmount] = useState<bigint>(
     TRANSACTION_AMOUNT_FALLBACK
   );
@@ -74,10 +76,10 @@ export const MerSuiWidget: FC<IMerSuiWidget> = ({
   useEffect(() => {
     if (currentAccount) {
       fetchSuiPrice().then((priceObj: IPythPrice) => {
-        setTransactionAmount(calculateAmount(priceObj));
+        setTransactionAmount(calculateAmount(priceObj, amount));
       });
     }
-  }, [currentAccount]);
+  }, [currentAccount, amount]);
 
   if (currentAccount) {
     return (
@@ -89,7 +91,7 @@ export const MerSuiWidget: FC<IMerSuiWidget> = ({
         buttonClassName={buttonClassName}
         statusClassName={statusClassName}
       >
-        {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
+        {buttonLabel || DEFAULT_BUTTON_LABEL} ${amount}
       </MerSuiButton>
     );
   }
@@ -103,7 +105,7 @@ export const MerSuiWidget: FC<IMerSuiWidget> = ({
           buttonClassName={buttonClassName}
           statusClassName={statusClassName}
         >
-          {buttonLabel || DEFAULT_BUTTON_LABEL} ${AMOUNT_USD}
+          {buttonLabel || DEFAULT_BUTTON_LABEL} ${amount}
         </MerSuiButton>
       }
     />
@@ -190,14 +192,14 @@ const fetchSuiPrice = async () => {
   return data.parsed[0].price as IPythPrice;
 };
 
-const calculateAmount = (price: IPythPrice): bigint => {
+const calculateAmount = (price: IPythPrice, amount: number): bigint => {
   if (!price?.price) {
     return TRANSACTION_AMOUNT_FALLBACK;
   }
 
   return BigInt(
     Math.round(
-      (AMOUNT_USD / (parseFloat(price.price) / 10 ** Math.abs(price.expo))) *
+      (amount / (parseFloat(price.price) / 10 ** Math.abs(price.expo))) *
         1_000_000_000
     )
   );
