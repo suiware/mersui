@@ -191,9 +191,13 @@ const fetchSuiPrice = async () => {
 };
 
 const calculateAmount = (price: IPythPrice): bigint => {
+  if (!price?.price) {
+    return TRANSACTION_AMOUNT_FALLBACK;
+  }
+
   return BigInt(
     Math.round(
-      (parseFloat(price.price) / 10 ** Math.abs(price.expo) / AMOUNT_USD) *
+      (AMOUNT_USD / (parseFloat(price.price) / 10 ** Math.abs(price.expo))) *
         1_000_000_000
     )
   );
