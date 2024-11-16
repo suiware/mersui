@@ -49,7 +49,8 @@ Enjoy!
 | Prop                | Type     | Default | Description |
 | ------------------- | -------- | ------- | ----------- |
 | recipientAddress    | string   | -       | Sui address of the recipient |
-| buttonLabel         | string   | MerSui | Optional button label |
+| amount              | number   | 3       | Optional amount in USD |
+| buttonLabel         | string   | MerSui  | Optional button label |
 | containerClassName  | string   | -       | Optional class name for the button container |
 | buttonClassName     | string   | -       | Optional class name for the button |
 | statusClassName     | string   | -       | Optional class name for the status message. The `status-success` and `status-error` classes are automatically added for your convenience. |
