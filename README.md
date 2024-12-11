@@ -1,4 +1,8 @@
 # MerSui
+[![npm version](https://badge.fury.io/js/mersui.svg)](https://badge.fury.io/js/mersui)
+[![Bundlephobia Minified Size](https://badgen.net/bundlephobia/min/mersui)](https://bundlephobia.com/result?p=mersui)
+[![Discord chat](https://img.shields.io/discord/1237259509366521866.svg?logo=discord&style=flat-square)](https://discord.com/invite/HuDPpXz4Hx)
+
 Simple "Buy Me a Coffee" React button with payments in SUI.  
 No intermediaries, you receive donations directly to your Sui address.
 
