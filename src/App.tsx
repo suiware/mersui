@@ -9,6 +9,7 @@ function App() {
         <MerSuiWidget
           recipientAddress={import.meta.env.VITE_RECIPIENT_ADDRESS}
           buttonLabel="Support"
+          amount={0.1}
         />
       </div>
     </>
