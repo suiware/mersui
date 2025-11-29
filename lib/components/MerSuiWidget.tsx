@@ -19,7 +19,7 @@ import {
   TRANSACTION_AMOUNT_FALLBACK,
 } from "../constants";
 
-interface IMerSuiWidget {
+export interface IMerSuiWidget {
   recipientAddress: string;
   amount?: number;
   buttonLabel?: string;

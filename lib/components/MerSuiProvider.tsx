@@ -17,10 +17,17 @@ const { networkConfig } = createNetworkConfig({
 });
 const queryClient = new QueryClient();
 
-export const MerSuiProvider: FC<PropsWithChildren> = ({ children }) => {
+export interface IMerSuiProvider {
+  network?: "localnet" | "devnet" | "testnet" | "mainnet";
+}
+
+export const MerSuiProvider: FC<PropsWithChildren<IMerSuiProvider>> = ({
+  children,
+  network = "mainnet",
+}) => {
   return (
     <QueryClientProvider client={queryClient}>
-      <SuiClientProvider networks={networkConfig} defaultNetwork="localnet">
+      <SuiClientProvider networks={networkConfig} network={network}>
         <WalletProvider autoConnect={true}>{children}</WalletProvider>
       </SuiClientProvider>
     </QueryClientProvider>

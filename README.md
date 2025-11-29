@@ -18,19 +18,26 @@ pnpm add mersui || yarn add mersui || npm install mersui
 
 ## Usage
 
-First of all, wrap your main app component into the `MerSuiProvider` component.
+First, wrap your main app component into the `MerSuiProvider` component.
 
 ```tsx
 import { MerSuiProvider } from "mersui";
 
 function App() {
   return (
-    <MerSuiProvider>
+    <MerSuiProvider network="mainnet">
       <YourApp />
     </MerSuiProvider>
   );
 }
 ```
+
+### MerSuiProvider Props (IMerSuiProvider)
+
+| Prop                | Type     | Default | Description |
+| ------------------- | -------- | ------- | ----------- |
+| network    | "localnet", "devnet", "testnet", "mainnet"   | "mainnet"       | Network type |
+
 
 Then, use the `MerSuiWidget` component to render the button.
 
@@ -46,18 +53,18 @@ function App() {
 }
 ```
 
-Enjoy!
-
-### Props
+### MerSuiWidget Props (IMerSuiWidget)
 
 | Prop                | Type     | Default | Description |
 | ------------------- | -------- | ------- | ----------- |
 | recipientAddress    | string   | -       | Sui address of the recipient |
 | amount              | number   | 3       | Optional amount in USD |
-| buttonLabel         | string   | MerSui  | Optional button label |
+| buttonLabel         | string   | "MerSui"  | Optional button label |
 | containerClassName  | string   | -       | Optional class name for the button container |
 | buttonClassName     | string   | -       | Optional class name for the button |
 | statusClassName     | string   | -       | Optional class name for the status message. The `status-success` and `status-error` classes are automatically added for your convenience. |
+
+That's it! Enjoy!
 
 ## Pyth integration
 
